@@ -65,15 +65,28 @@ void loop() {
   u8g2.setFont(u8g2_font_wqy14_t_gb2312b); 
   u8g2.setFontDirection(0);
 
-  u8g2.setCursor(0, 15);
-  u8g2.print("光照：");
-  u8g2.print(sensor.getAmbientLight(GAIN_10));
+  int distance = sensor.getDistance();
+
+  if (distance >= 15 && distance <= 150) {
+    u8g2.setCursor(0, 15);
+    u8g2.print("光照：");
+    u8g2.print(sensor.getAmbientLight(GAIN_10));
     u8g2.print(" Lux");
-  u8g2.setCursor(0, 30);
-  u8g2.print("距离：");
-  u8g2.print(sensor.getDistance());
-  u8g2.print(" mm");
+    u8g2.setCursor(0, 30);
+    u8g2.print("距离：");
+    u8g2.print(distance);
+    u8g2.print(" mm");
+  } else if (distance < 15) {
+    u8g2.setCursor(0, 15);
+    u8g2.print("距离过近");
+  } else {
+    u8g2.setCursor(0, 15);
+    u8g2.print("距离过远");
+  }
+
+
   u8g2.sendBuffer();
+
   Serial.print("环境光级别 (Lux) = ");
   Serial.println(sensor.getAmbientLight(GAIN_10));
   Serial.print("测量距离 (mm) = ");
