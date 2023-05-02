@@ -6,21 +6,13 @@
 #define VL6180X_ADDRESS 0x29
 #define OLED_ADDRESS 0x3C
 
-
 int min_distance = 15;
 int max_distance = 150;
-
-
 
 VL6180xIdentification identification;
 VL6180x sensor(VL6180X_ADDRESS);
 
 U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE, /* clock=*/ SCL, /* data=*/ SDA);
-
-
-
-
-
 
 void printIdentification(struct VL6180xIdentification *temp){
   Serial.print("设备 ID = ");
@@ -56,17 +48,12 @@ void delay_ms(int ms) {
   while (millis() - startMillis < ms);
 }
 
-
-
 void setup() {
   Serial.begin(9600); 
   Wire.begin();
-
   u8g2.begin();
   u8g2.enableUTF8Print();
-
   delay(1000); 
-
   sensor.getIdentification(&identification); 
   printIdentification(&identification); 
 
@@ -76,8 +63,6 @@ void setup() {
 
   sensor.VL6180xDefautSettings();   
   delay(1000); 
-
-
 }
 
 void loop() {
@@ -87,9 +72,7 @@ void loop() {
   u8g2.clearBuffer();
   u8g2.setFont(u8g2_font_wqy14_t_gb2312b); 
   u8g2.setFontDirection(0);
-
   int distance = sensor.getDistance();
-
   if (distance >= min_distance && distance <= max_distance) {
     u8g2.setCursor(0, 15);
     u8g2.print("光照：");
@@ -106,10 +89,7 @@ void loop() {
     u8g2.setCursor(0, 15);
     u8g2.print("距离过远");
   }
-
-
   u8g2.sendBuffer();
-
   Serial.print("环境光级别 (Lux) = ");
   Serial.println(sensor.getAmbientLight(GAIN_10));
   Serial.print("测量距离 (mm) = ");
