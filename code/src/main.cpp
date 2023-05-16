@@ -60,7 +60,6 @@ void setup() {
   if(sensor.VL6180xInit() != 0){
     Serial.println("VL6180初始化失败"); 
   }; 
-
   sensor.VL6180xDefautSettings();   
   delay(1000); 
 }
@@ -76,7 +75,7 @@ void loop() {
   if (distance >= min_distance && distance <= max_distance) {
     u8g2.setCursor(0, 15);
     u8g2.print("光照：");
-    u8g2.print(sensor.getAmbientLight(GAIN_10));
+    u8g2.print(sensor.getAmbientLight(GAIN_1)*1000);
     u8g2.print(" Lux");
     u8g2.setCursor(0, 30);
     u8g2.print("距离：");
@@ -91,13 +90,13 @@ void loop() {
   }
   u8g2.sendBuffer();
   Serial.print("环境光级别 (Lux) = ");
-  Serial.println(sensor.getAmbientLight(GAIN_10));
+  Serial.println(sensor.getAmbientLight(GAIN_1)*1000);
   Serial.print("测量距离 (mm) = ");
   Serial.println(sensor.getDistance());
 
-  if (currentMillis - last_50ms >= 50) {
+/*   if (currentMillis - last_50ms >= 50) {
     last_50ms = currentMillis;
     Serial.println("Delay 50ms");
     delay_ms(50);
-  } 
+  }  */
 };
