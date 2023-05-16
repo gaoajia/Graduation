@@ -13,6 +13,8 @@
 - Python 3.11.3
 
 ### 项目目录
+
+```
 .
 ├── code
 │   ├── include
@@ -32,3 +34,4 @@
 ├── README.md
 └── Thesis
     └── 毕业论文.docx
+```
